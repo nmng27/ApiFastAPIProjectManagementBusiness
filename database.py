@@ -1,8 +1,6 @@
-import oracledb
-def connect_db():
-    try:
-        DATABASE_URL = ""
-        conn = oracledb.connect(DATABASE_URL)
-        return conn
-    except Exception as e:
-        raise e
+import psycopg2
+
+
+DATABASE_URL = "postgresql://postgres/projects@localhost/KingDavid"
+conn = psycopg2.connect(DATABASE_URL)
+cursor = conn.cursor()
