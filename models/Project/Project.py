@@ -8,11 +8,7 @@ class Scope(BaseModel):
     technologies:str
     methodology:str
 
-class ProjectPerformance(BaseModel):
-    id:Optional[int]
-    date_start:date
-    hours_previously:int
-    status_schedule:str
+
 
 class Project(BaseModel):
     id:Optional[int]
@@ -22,6 +18,5 @@ class Project(BaseModel):
     objective:str
     is_finished:bool
     scope:Scope
-    performance:ProjectPerformance
     customer:Customer
 
