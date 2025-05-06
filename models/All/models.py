@@ -1,6 +1,6 @@
 from database import base as Base
 from datetime import date
-from sqlalchemy import  Integer, String,Date,Boolean
+from sqlalchemy import  Integer, String,Date,Boolean,Float
 from sqlalchemy.orm import relationship,Mapped,mapped_column
 from typing import List
 
@@ -173,7 +173,7 @@ class FinancialRegistration():
     id:Mapped[int] = mapped_column(Integer,primary_key=True,autoincrement=True)
     name:Mapped[str]= mapped_column(String(100),nullable=False)
     type:Mapped[str] = mapped_column(String(100),nullable=False)
-    value:Mapped[float] = None 
+    value:Mapped[float] = mapped_column(Float,nullable=False) 
     date_register:Mapped[date] = mapped_column(Date,nullable=False)
     is_recorrent:Mapped[bool] = mapped_column(Boolean, nullable=False)
     customer_id:Mapped[int] = mapped_column(Integer,nullable=False)
@@ -185,7 +185,7 @@ class Sales():
     id:Mapped[int] = mapped_column(Integer,primary_key=True,autoincrement=True)
     name:Mapped[str]= mapped_column(String(100),nullable=False)
     type:Mapped[str] = mapped_column(String(100),nullable=False)
-    value:Mapped[float] = None 
+    value:Mapped[float] = mapped_column(Float,nullable=False)  
     date_register:Mapped[date] = mapped_column(Date,nullable=False)
     customer_id:Mapped[int] = mapped_column(Integer,nullable=False)
     customer:Mapped[List[Customer]] = relationship(back_populates="customer_sales",cascade="all delete-orphan")
