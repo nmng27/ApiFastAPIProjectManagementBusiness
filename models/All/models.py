@@ -1,6 +1,6 @@
-from database import session, engine,base as Base
+from database import base as Base
 from datetime import date
-from sqlalchemy import Column, Integer, String,Date,Boolean
+from sqlalchemy import  Integer, String,Date,Boolean
 from sqlalchemy.orm import relationship,Mapped,mapped_column
 from typing import List
 

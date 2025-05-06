@@ -1,5 +1,4 @@
 
-import sqlite3
 from sqlalchemy.orm import declarative_base,Session
 from sqlalchemy import create_engine
 
