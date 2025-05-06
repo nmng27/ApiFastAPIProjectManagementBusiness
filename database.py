@@ -1,6 +1,16 @@
-import psycopg2
+
+import sqlite3
+from sqlalchemy.orm import declarative_base,Session
+from sqlalchemy import create_engine
 
 
-DATABASE_URL = "postgresql://postgres/projects@localhost/KingDavid"
-conn = psycopg2.connect(DATABASE_URL)
-cursor = conn.cursor()
+url = "sqlite://app.db"
+
+base = declarative_base()
+
+engine = create_engine(url=url,echo=True)
+
+session = Session(bind=engine)
+
+
+
