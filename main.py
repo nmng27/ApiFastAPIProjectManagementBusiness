@@ -1,8 +1,24 @@
-
+from models.User.user import User
+from models.Customer.customer import Customer
+from models.Address.Address import Address
+from models.Phone.phone import Phone
+from models.Contract import contract
+from models.Customer import customer
+from models.Employee import Employee
+from models.Financial import Financial
+from models.Login import Login
+from models.Task import Task
+from models.Sales import Sales
+from models.Job.Job import Job
+from fastapi import FastAPI
+from database import conn,cursor
 # User
+app = FastAPI()
 
-def created():
+def created(user:User):
     pass
+        
+        
 
 def login():
     pass
