@@ -1,8 +1,6 @@
 from models.All.models import Project
-from sqlalchemy import String, Integer, Boolea,select
+from sqlalchemy import select
 from typing import List
-from datetime import date
-from database import base as Base
 from database import session as db
 from sqlalchemy.exc import SQLAlchemyError
 

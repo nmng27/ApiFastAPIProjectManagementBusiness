@@ -1,4 +1,4 @@
-from models.All.models import Phone, Customer
+from models.All.models import Phone
 from database import session as db
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
