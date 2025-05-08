@@ -18,3 +18,9 @@ A ideia principal por trás desse sistema ficticio desenvolvido, onde o intuito 
 - Pydantic
 - Sqlite
 
+## 3. Instalação
+- git clone {url}
+- pip install -r requiriments.txt
+- python -m uvicorn main:app
+
+
