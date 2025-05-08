@@ -1,0 +1,14 @@
+FROM python:3
+
+WORKDIR /API
+
+COPY . .
+
+RUN pip install sqlalchemy, pydantic, fastapi, uvicorn
+
+ENV python=3.11.9
+
+EXPOSE 8000
+
+CMD uvicorn main:app
+
