@@ -1,4 +1,5 @@
 from models.All.models import Address
+from Schemas.Schema import Address as AddresSchema, PhoneSchema,UserSchema,CustomerSchema,ProjectSchema,TaskSchema,FinancialSchema,SalesSchema,JobSchema,CandidateSchema
 from database import session as db
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import select
@@ -6,7 +7,7 @@ from models.All.models import Phone, Address, User,Customer,Contract,Project,Tas
 from typing import List
 from datetime import date
 class AddressService():
-    def create(new_address:Address):
+    def create(new_address:AddresSchema):
         try:
             db.add(new_address)
             db.commit()
@@ -15,7 +16,7 @@ class AddressService():
         finally:
             db.close()
 
-    def update(id:int, address:Address):
+    def update(id:int, address:AddresSchema):
         try:
             search:Address = select(Address).where(Address.id is id)
             search.street = address.street
@@ -30,7 +31,7 @@ class AddressService():
 
 
 class PhoneService:
-    def create(phone:Phone):
+    def create(phone:PhoneSchema):
         try:
             db.add(phone)
             db.commit()
@@ -39,7 +40,7 @@ class PhoneService:
         finally:
             db.close()
 
-    def update(id:int,phone:Phone):
+    def update(id:int,phone:PhoneSchema):
         try:
             search:Phone = select(Phone.id is id)
             search.ddd = phone.ddd
@@ -51,7 +52,7 @@ class PhoneService:
             db.close()
 
 class CustomerService:
-    def create_customer(customer:Customer):
+    def create_customer(customer:CustomerSchema):
         try:
             db.add(customer)
             db.commit()
@@ -60,9 +61,9 @@ class CustomerService:
         finally:
             db.close()
 
-    def update_customer(customer:Customer,id:int):
+    def update_customer(customer:CustomerSchema,id:int):
         try:
-            search:Customer = select(Customer).where(Customer.id is id)
+            search:CustomerSchema = select(Customer).where(CustomerSchema.id is id)
             search.fantasy_name = customer.fantasy_name
             search.Foundation = customer.Foundation
             search.service = customer.service
@@ -79,13 +80,13 @@ class CustomerService:
 
     def delete_customer(id:int):
         try:
-            search:Customer = select(Customer).where(Customer.id is id)
+            search:CustomerSchema = select(Customer).where(CustomerSchema.id is id)
             db.delete(search)
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
-    def getting_all_customer()->List[Customer]:
+    def getting_all_customer()->List[CustomerSchema]:
         try:
             customers:List[Customer] = select(Customer)
             return customers
@@ -95,27 +96,27 @@ class CustomerService:
             db.close()
 
 
-    def getting_customer_by_id(id:int)->Customer:
+    def getting_customer_by_id(id:int)->CustomerSchema:
         try:
-            customer:Customer = select(Customer).where(Customer.id is id)
+            customer:CustomerSchema = select(Customer).where(Customer.id is id)
             return customer
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_customer_by_sector(secotr:str)->List[Customer]:
+    def getting_customer_by_sector(secotr:str)->List[CustomerSchema]:
         try:
-            customers:List[Customer] = select(Customer).where(Customer.sector == secotr)
+            customers:List[CustomerSchema] = select(CustomerSchema).where(CustomerSchema.sector == secotr)
             return customers
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_customer_by_service(service:str)->List[Customer]:
+    def getting_customer_by_service(service:str)->List[CustomerSchema]:
         try:
-            customers:List[Customer] = select(Customer).where(Customer.service is service)
+            customers:List[Customer] = select(CustomerSchema).where(CustomerSchema.service is service)
             return customers
         except SQLAlchemyError as e:
             raise e
@@ -124,7 +125,7 @@ class CustomerService:
     
 
 class UserService():
-    def create_user(user:User):
+    def create_user(user:UserSchema):
         try:
             db.add(user)
             db.commit()
@@ -134,9 +135,9 @@ class UserService():
             db.close()
 
 
-    def update_user(id:int,user:User):
+    def update_user(id:int,user:UserSchema):
         try:
-            search:User = select(User).where(User.id is id)
+            search:User = select(User).where(UserSchema.id is id)
             search.name = user.name
             search.mail_addres = user.mail_addres
             search.address_id = user.address_id
@@ -154,7 +155,7 @@ class UserService():
 
     def delete(id:int):
         try:
-            search:User = select(User).where(User.id is id)
+            search:User = select(UserSchema).where(UserSchema.id is id)
             db.delete(search)
             db.commit()
         except SQLAlchemyError as e:
@@ -166,7 +167,7 @@ class UserService():
 
     def login(email:str, pwd:str):
         try:
-            search:User = select(User).where(User.mail_addres is email and User.password is pwd)
+            search:UserSchema = select(UserSchema).where(UserSchema.mail_addres is email and UserSchema.password is pwd)
             if(search):
                 return search
             return None
@@ -177,7 +178,7 @@ class UserService():
 
 class ContractService:
 
-    def create_contract(new_contract:Contract):
+    def create_contract(new_contract):
         try:
             db.add(new_contract)
             db.commit()
@@ -241,7 +242,7 @@ class ContractService:
 
 
 class ProjectService:
-    def create(project:Project):
+    def create(project:ProjectSchema):
         try:
             db.add(project)
             db.commit()
@@ -251,9 +252,9 @@ class ProjectService:
             db.close()
 
 
-    def update(id:int,project:Project):
+    def update(id:int,project:ProjectSchema):
         try:
-            search:Project = select(project)
+            search:ProjectSchema = select(project)
             search.type = project.type
             search.tech = project.tech
             search.methodology = project.methodology
@@ -272,7 +273,7 @@ class ProjectService:
 
     def delete(id:int):
         try:
-            search:Project = select(Project).where(Project.id is id)
+            search:ProjectSchema = select(ProjectSchema).where(ProjectSchema.id is id)
             db.delete(search)
             db.commit()
         except SQLAlchemyError as ex:
@@ -280,27 +281,27 @@ class ProjectService:
         finally:
             db.close()
 
-    def getting_all()->List[Project]:
+    def getting_all()->List[ProjectSchema]:
         try:
-            projects:List[Project] = select(Project)
+            projects:List[ProjectSchema] = select(ProjectSchema)
             return projects
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_id(id:int)->Project:
+    def getting_by_id(id:int)->ProjectSchema:
         try:
-            project:Project = select(Project).where(Project.id is id)
+            project:ProjectSchema = select(Project).where(ProjectSchema.id is id)
             return project
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_name(name:str)->List[Project]:
+    def getting_by_name(name:str)->List[ProjectSchema]:
         try:
-            projects:List[Project] = select(Project).where(Project.name is name)
+            projects:List[ProjectSchema] = select(ProjectSchema).where(ProjectSchema.name is name)
             return projects
         except SQLAlchemyError as ex:
             raise ex
@@ -309,7 +310,7 @@ class ProjectService:
 
     def getting_by_type(type:str):
         try:
-            projects:List[Project] = select(Project).where(Project.type is type)
+            projects:List[ProjectSchema] = select(ProjectSchema).where(ProjectSchema.type is type)
             return projects
         except SQLAlchemyError as ex:
             raise ex
@@ -318,7 +319,7 @@ class ProjectService:
 
     def getting_by_is_finished(finished:bool):
         try:
-            projects:List[Project] = select(Project).where(Project.is_finished is finished)
+            projects:List[ProjectSchema] = select(ProjectSchema).where(ProjectSchema.is_finished is finished)
             return projects
         except SQLAlchemyError as ex:
             raise ex
@@ -326,7 +327,7 @@ class ProjectService:
             db.close()
 
 class TaskService:
-    def create(task:Task):
+    def create(task:TaskSchema):
         try:
             db.add(task)
             db.commit()
@@ -335,9 +336,9 @@ class TaskService:
         finally:
             db.close()
 
-    def update(task:Task,id:int):
+    def update(task:TaskSchema,id:int):
         try:
-            search:Task = select(Task).where(Task.id is id)
+            search:TaskSchema = select(TaskSchema).where(TaskSchema.id is id)
             search.date_task = task.date_task
             search.name = task.name
             search.status = task.status
@@ -356,7 +357,7 @@ class TaskService:
 
     def delete(id:int):
         try:
-            search:Task = select(Task).where(Task.id is id)
+            search:TaskSchema = select(TaskSchema).where(TaskSchema.id is id)
             db.delete(search)
             db.commit()
         except SQLAlchemyError as ex:
@@ -367,34 +368,34 @@ class TaskService:
 
     def getting_all()->List[Task]:
         try:
-            tasks:List[Task] = select(Task)
+            tasks:List[TaskSchema] = select(TaskSchema)
             return tasks
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_id(id:int)->Task:
+    def getting_by_id(id:int)->TaskSchema:
         try:
-            task:Task = select(Task).where(Task.id is id)
+            task:Task = select(TaskSchema).where(TaskSchema.id is id)
             return task
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
     
-    def getting_by_name(name:str)->List[Task]:
+    def getting_by_name(name:str)->List[TaskSchema]:
         try:
-            task:List[Task] = select(Task).where(Task.name is name)
+            task:List[TaskSchema] = select(TaskSchema).where(TaskSchema.name is name)
             return task
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
     
-    def getting_by_status(status:bool)->List[Task]:
+    def getting_by_status(status:bool)->List[TaskSchema]:
         try:
-            task:List[Task] = select(Task).where(Task.status is status)
+            task:List[TaskSchema] = select(TaskSchema).where(TaskSchema.status is status)
             return task
         except SQLAlchemyError as ex:
             raise ex
@@ -404,7 +405,7 @@ class TaskService:
    
 
 class JobService:
-    def create(job:Job):
+    def create(job:JobSchema):
         try:
             db.add(job)
             db.commit()
@@ -413,9 +414,9 @@ class JobService:
         finally:
             db.close()
 
-    def update(job:Job,id:int):
+    def update(job:JobSchema,id:int):
         try:
-            search:Job = select(Job).where(Job.id is id)
+            search:Job = select(Job).where(JobSchema.id is id)
             search.customer = job.customer
             search.budget = job.budget
             search.customer_id = job.customer_id
@@ -434,25 +435,25 @@ class JobService:
 
     def delete(id:int):
         try:
-            search:Job = select(Job).where(Job.id is id)
+            search:JobSchema = select(JobSchema).where(JobSchema.id is id)
             db.delete(search)
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_all()->List[Job]:
+    def getting_all()->List[JobSchema]:
         try:
-            jobs:List[Job] = select(Job)
+            jobs:List[JobSchema] = select(JobSchema)
             return jobs
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_id(id:int)->Job:
+    def getting_by_id(id:int)->JobSchema:
         try:
-            search:Job = select(Job).where(Job.id is id)
+            search:JobSchema = select(Job).where(Job.id is id)
             return search  
         except SQLAlchemyError as ex:
             raise ex
@@ -461,7 +462,7 @@ class JobService:
 
 def getting_by_name(name:str):
     try:
-            search:Job = select(Job).where(Job.name is name)
+            search:JobSchema = select(Job).where(Job.name is name)
             return search  
     except SQLAlchemyError as ex:
         raise ex
@@ -469,7 +470,7 @@ def getting_by_name(name:str):
         db.close()
 
 class CandidateService():
-    def create_candidate(candidate:Candidate):
+    def create_candidate(candidate:CandidateSchema):
         try:
             db.add(candidate)
             db.commit()
@@ -478,9 +479,9 @@ class CandidateService():
         finally:
             db.close()
 
-    def update_candidate(id:int, candidate:Candidate):
+    def update_candidate(id:int, candidate:CandidateSchema):
         try:
-            search:Candidate = select(Candidate).where(Candidate.id is id)
+            search:CandidateSchema = select(Candidate).where(Candidate.id is id)
             search.approved = candidate.approved
             search.job = candidate.job
             search.job_id = candidate.job_id
@@ -496,14 +497,14 @@ class CandidateService():
 
     def delete(id:int):
         try:
-            search:Candidate = select(Candidate).where(Candidate.id is id)
+            search:CandidateSchema = select(Candidate).where(Candidate.id is id)
             db.delete(search)
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_all()->List[Candidate]:
+    def getting_all()->List[CandidateSchema]:
         try:
             search:List[Candidate] = select(Candidate)
             return search
@@ -512,7 +513,7 @@ class CandidateService():
         finally:
             db.close()
 
-    def getting_by_id(id:int)->Candidate:
+    def getting_by_id(id:int)->CandidateSchema:
         try:
             search:Candidate = select(Candidate).where(Candidate.id is id)
             return search
@@ -524,7 +525,7 @@ class CandidateService():
     
 
 class SalesService():
-    def create(new_sale:Sales):
+    def create(new_sale:SalesSchema):
         try:
             db.add(new_sale)
             db.commit()
@@ -535,7 +536,7 @@ class SalesService():
 
     def update(id:int,sales:Sales):
         try:
-            search:Sales = select(Sales).where(Sales.id is id)
+            search:SalesSchema = select(Sales).where(Sales.id is id)
             search.customer = sales.customer
             search.customer_id = sales.customer_id
             search.date_register = sales.date_register
@@ -550,60 +551,35 @@ class SalesService():
 
     def delete(id:int):
         try:
-            search:Sales = select(Sales).where(Sales.id is id)
+            search:SalesSchema = select(Sales).where(Sales.id is id)
             db.delete(search)
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_all()->List[Sales]:
+    def getting_all()->List[SalesSchema]:
         try:
-            sales:List[Sales] = select(Sales)
+            sales:List[SalesSchema] = select(Sales)
             return sales
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_id(id:int)->Sales:
+    def getting_by_id(id:int)->SalesSchema:
         try:
-            search:Sales = select(Sales).where(Sales.id is id)
+            search:SalesSchema = select(Sales).where(Sales.id is id)
             return search
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def gettting_by_type(type:str):
-        try:
-            search:List[Sales] = select(Sales).where(Sales.type is type)
-            return search
-        except SQLAlchemyError as ex:
-            raise ex
-        finally:
-            db.close()
 
-    def getting_by_value(value:float):
-        try:
-            search:List[Sales] = select(Sales).where(Sales.value > value)
-            return search
-        except SQLAlchemyError as ex:
-            raise ex
-        finally:
-            db.close()
-
-    def getting_by_date(date_press:date):
-        try:
-            search:List[Sales] = select(Sales).where(Sales.date_register is date)
-            return search
-        except SQLAlchemyError as ex:
-            raise ex
-        finally:
-            db.close()
 
 class FinancialService:
-    def create(financial:FinancialRegistration):
+    def create(financial:FinancialSchema):
         try:
             db.add(financial)
             db.commit()
@@ -612,9 +588,9 @@ class FinancialService:
         finally:
             db.close()
 
-    def update(id:int,financial:FinancialRegistration):
+    def update(id:int,financial:FinancialSchema):
         try:
-            search:FinancialRegistration = select(FinancialRegistration).where(FinancialRegistration.id is id)
+            search:FinancialSchema = select(FinancialRegistration).where(FinancialRegistration.id is id)
             search.contract = financial.contract
             search.contract_id = financial.contract_id
             search.customer = financial.customer
@@ -632,7 +608,7 @@ class FinancialService:
 
     def delete(id:int):
         try:
-            search:FinancialRegistration = select(FinancialRegistration.id is id)
+            search:FinancialSchema = select(FinancialRegistration.id is id)
             db.delete(search)
             db.commit()
         except SQLAlchemyError as ex:
@@ -642,47 +618,23 @@ class FinancialService:
 
     def getting_all()->List[FinancialRegistration]:
         try:
-            search:List[FinancialRegistration] = select(FinancialRegistration)
+            search:List[FinancialSchema] = select(FinancialRegistration)
             return search
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_id(id:int)->FinancialRegistration:
+    def getting_by_id(id:int)->FinancialSchema:
         try:
-            search:FinancialRegistration = select(FinancialRegistration).where(FinancialRegistration.id is id)
+            search:FinancialSchema = select(FinancialRegistration).where(FinancialRegistration.id is id)
             return search
         except SQLAlchemyError as ex:
             raise ex
         finally:
             db.close()
 
-    def getting_by_name(name:str)->List[FinancialRegistration]:
-        try:
-            search:List[FinancialRegistration] = select(FinancialRegistration).where(FinancialRegistration.name is name)
-            return search
-        except SQLAlchemyError as ex:
-            raise ex
-        finally:
-            db.close()
 
-    def getting_by_type(type:str)->List[FinancialRegistration]:
-        try:
-            search:List[FinancialRegistration] = select(FinancialRegistration).where(FinancialRegistration.type is type)
-            return search
-        except SQLAlchemyError as ex:
-            raise ex
-        finally:
-            db.close()
 
-    def getting_by_value(value:float):
-        try:
-            search:FinancialRegistration = select(FinancialRegistration).where(FinancialRegistration.value > value)
-            return search
-        except SQLAlchemyError as e:
-            raise e
-        finally:
-            db.close()
 
             

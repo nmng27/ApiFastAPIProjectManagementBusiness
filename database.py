@@ -3,7 +3,7 @@ from sqlalchemy.orm import declarative_base,Session
 from sqlalchemy import create_engine
 
 
-url = "sqlite://app.db"
+url = "sqlite:///app.db"
 
 base = declarative_base()
 

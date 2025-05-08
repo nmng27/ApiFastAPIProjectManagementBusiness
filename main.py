@@ -6,7 +6,7 @@ from typing import List
 app = FastAPI()
 
 @app.post("/address",response_model=AddressSchema,status_code=status.HTTP_200_OK)
-def create_address(addres:Address):
+def create_address(addres:AddressSchema):
     try:
         AddressService.create(Address)
         return {"status":"Endereço Adicionado com Sucesso!"}
@@ -17,7 +17,7 @@ def create_address(addres:Address):
 
 
 @app.put("/address/{id}",response_model=AddressSchema,status_code=status.HTTP_200_OK)
-def update_address(new_address:Address,id:int):
+def update_address(new_address:AddressSchema,id:int):
     try:
         AddressService.update(id,new_address)
         return {
@@ -31,7 +31,7 @@ def update_address(new_address:Address,id:int):
 
     
 @app.post("/phone",response_model=PhoneSchema,status_code=status.HTTP_200_OK)
-def create_phone(phone:Phone):
+def create_phone(phone:PhoneSchema):
     try:
         PhoneService.create(phone)
         return {
@@ -44,7 +44,7 @@ def create_phone(phone:Phone):
 
     
 @app.put("/phone/{id}",response_model=PhoneSchema,status_code=status.HTTP_200_OK)
-def update_phone(id:int, phone:Phone):
+def update_phone(id:int, phone:PhoneSchema):
     try:
         PhoneService.update(id,phone)
         return {
@@ -56,7 +56,7 @@ def update_phone(id:int, phone:Phone):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.post("/customers", response_model=CustomerSchema,status_code=status.HTTP_200_OK)
-def create_customer(customer:Customer):
+def create_customer(customer:CustomerSchema):
     try:
         CustomerService.create_customer(customer)
         return {
@@ -68,7 +68,7 @@ def create_customer(customer:Customer):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.put("/customers/{id}",response_model=CustomerSchema,status_code=status.HTTP_200_OK)
-def update_customer(id:int, customer:Customer):
+def update_customer(id:int, customer:CustomerSchema):
     try:
         CustomerService.update_customer(id, customer)
         return {
@@ -95,7 +95,7 @@ def delete(id:int):
 @app.get("/customers",response_model=List[CustomerSchema],status_code=status.HTTP_200_OK)
 def listing_customers():
     try:
-        customers:List[Customer] = CustomerService.getting_all_customer()
+        customers:List[CustomerSchema] = CustomerService.getting_all_customer()
         return customers
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
@@ -105,7 +105,7 @@ def listing_customers():
 @app.get("/customer/{id}",response_model=CustomerSchema,status_code=status.HTTP_200_OK)
 def getting_customer_by_id(id:int):
     try:
-        customer:Customer = CustomerService.getting_customer_by_id(id)
+        customer:CustomerSchema = CustomerService.getting_customer_by_id(id)
         return customer
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
@@ -116,7 +116,7 @@ def getting_customer_by_id(id:int):
 @app.get("/customers/{sector}",response_model=List[CustomerSchema],status_code=status.HTTP_200_OK)
 def getting_customers_by_sector(sector:str):
     try:
-        customers:List[Customer] = CustomerService.getting_customer_by_sector(sector)
+        customers:List[CustomerSchema] = CustomerService.getting_customer_by_sector(sector)
         return customers
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
@@ -127,7 +127,7 @@ def getting_customers_by_sector(sector:str):
 @app.get("/customers/{service}",response_model=List[CustomerSchema],status_code=status.HTTP_200_OK)
 def getting_customers_by_service(service:str):
     try:
-        customers:List[Customer] = CustomerService.getting_customer_by_service(service)
+        customers:List[CustomerSchema] = CustomerService.getting_customer_by_service(service)
         return customers
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
@@ -136,7 +136,7 @@ def getting_customers_by_service(service:str):
     
 
 @app.post("/user",response_model=UserSchema,status_code=status.HTTP_200_OK)
-def create_user(user:User):
+def create_user(user:UserSchema):
     try:
         UserService.create_user(user)
         return {
@@ -148,7 +148,7 @@ def create_user(user:User):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
     
 @app.put("/user/{id}",response_model=UserSchema,status_code=status.HTTP_200_OK)
-def update_user(id:int, user:User):
+def update_user(id:int, user:UserSchema):
     try:
         UserService.update_user(id,user)
         return {
@@ -178,7 +178,7 @@ def login():
     pass
 
 @app.post("/contract", response_model=ContractSchema,status_code=status.HTTP_200_OK)
-def create_contract(contract:Contract):
+def create_contract(contract:ContractSchema):
     try:
         ContractService.create_contract(contract)
         return {
@@ -190,7 +190,7 @@ def create_contract(contract:Contract):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
     
 @app.put("/contract/{id}",response_model=ContractSchema,status_code=status.HTTP_200_OK)
-def update_contract(id:int, contract:Contract):
+def update_contract(id:int, contract:ContractSchema):
     try:
         ContractService.update_contract(id,contract)
         return {
@@ -204,7 +204,7 @@ def update_contract(id:int, contract:Contract):
 @app.get("/contracts", response_model=List[ContractSchema],status_code=status.HTTP_200_OK)
 def getting_all_contracts():
     try:
-        contracts:List[Contract]=ContractService.getting_contract()
+        contracts:List[ContractSchema]=ContractService.getting_contract()
         return contracts
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
@@ -214,27 +214,27 @@ def getting_all_contracts():
 @app.get("/contract/{id}",response_model=ContractSchema,status_code=status.HTTP_200_OK)
 def getting_contract_by_id(id:int):
     try:
-        contract:Contract = ContractService.getting_contract_by_id(id)
+        contract:ContractSchema = ContractService.getting_contract_by_id(id)
         return contract
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
     
-@app.get("/contracts/{valid}",response_model=List[Contract],status_code=status.HTTP_200_OK)
+@app.get("/contracts/{valid}",response_model=List[ContractSchema],status_code=status.HTTP_200_OK)
 def getting_all_by_validation(valid:bool):
     try:
-        contracts:List[Contract]=ContractService.getting_contract_by_valid(valid)
+        contracts:List[ContractSchema]=ContractService.getting_contract_by_valid(valid)
         return contracts
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
     except HTTPException:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
-@app.get("/contracts/{customer}",response_model=List[Contract],status_code=status.HTTP_200_OK)
+@app.get("/contracts/{customer}",response_model=List[ContractSchema],status_code=status.HTTP_200_OK)
 def getting_contracts_by_customer(customer:int):
     try:
-        contracts:List[Contract] = ContractService.getting_contract_by_customer(customer)
+        contracts:List[ContractSchema] = ContractService.getting_contract_by_customer(customer)
         return contracts
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um endereço.")
@@ -242,7 +242,7 @@ def getting_contracts_by_customer(customer:int):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
     
 @app.post("/projects",response_model=ProjectSchema,status_code=status.HTTP_200_OK)
-def create_project(project:Project):
+def create_project(project:ProjectSchema):
     try:
         ProjectService.create(project)
         return {
@@ -254,7 +254,7 @@ def create_project(project:Project):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
     
 @app.put("/projects/{id}",)
-def update_project(id:int,project:Project,response_model=ProjectSchema,status_code=status.HTTP_200_OK):
+def update_project(id:int,project:ProjectSchema,response_model=ProjectSchema,status_code=status.HTTP_200_OK):
     try:
         ProjectService.update(id,project)
         return {
@@ -280,7 +280,7 @@ def delete_project(id:int):
 @app.get("/projects",response_model=List[ProjectSchema],status_code=status.HTTP_200_OK)
 def getting_all_projects():
     try:
-        projects:List[Project] = ProjectService.getting_all()
+        projects:List[ProjectSchema] = ProjectService.getting_all()
         return projects
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -290,7 +290,7 @@ def getting_all_projects():
 @app.get("/projects/{id}", response_model=ProjectSchema,status_code=status.HTTP_200_OK)
 def getiing_project_by_id(id:int):
     try:
-        project:Project = ProjectService.getting_by_id(id)
+        project:ProjectSchema= ProjectService.getting_by_id(id)
         return project
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -302,7 +302,7 @@ def getiing_project_by_id(id:int):
 @app.get("/projects/{is_finished}",response_model=ProjectSchema,status_code=status.HTTP_200_OK)
 def getting_projects_is_finished(is_finished:bool):
     try:
-        projects:List[Project] = ProjectService.getting_by_is_finished(is_finished)
+        projects:List[ProjectSchema] = ProjectService.getting_by_is_finished(is_finished)
         return projects
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -311,7 +311,7 @@ def getting_projects_is_finished(is_finished:bool):
 
 
 @app.post("/tasks",response_model=TaskSchema,status_code=status.HTTP_200_OK)
-def create_task(task:Task):
+def create_task(task:TaskSchema):
     try:
         TaskService.create(task)
         return {
@@ -323,7 +323,7 @@ def create_task(task:Task):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.put("/tasks/{id}",response_model=TaskSchema,status_code=status.HTTP_200_OK)
-def update_task(id:int,task:Task):
+def update_task(id:int,task:TaskSchema):
     try:
         TaskService.update(id, task)
         return {
@@ -349,7 +349,7 @@ def delete_task_by_id(id:int):
 @app.get("/tasks",response_model=List[TaskSchema],status_code=status.HTTP_200_OK)
 def get_tasks():
     try:
-        tasks:List[Task] = TaskService.getting_all()
+        tasks:List[TaskSchema] = TaskService.getting_all()
         return tasks
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -360,7 +360,7 @@ def get_tasks():
 @app.get("/tasks/{id}",response_model=TaskSchema,status_code=status.HTTP_200_OK)
 def getting_task_by_id(id:int):
     try:
-        task:Task = TaskService.getting_by_id(id)
+        task:TaskSchema = TaskService.getting_by_id(id)
         return task
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -371,7 +371,7 @@ def getting_task_by_id(id:int):
 @app.get("/tasks/{status}")
 def getting_task_by_status(status:bool):
     try:
-        tasks:List[Task] = TaskService.getting_by_status(status)
+        tasks:List[TaskSchema] = TaskService.getting_by_status(status)
         return tasks
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -380,7 +380,7 @@ def getting_task_by_status(status:bool):
 
 
 @app.post("/jobs",response_model=JobSchema,status_code=status.HTTP_200_OK)
-def create_job(job:Job):
+def create_job(job:JobSchema):
     try:
         JobService.create(job)
         return {
@@ -392,7 +392,7 @@ def create_job(job:Job):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.put("/jobs/{id}",response_model=JobSchema,status_code=status.HTTP_200_OK)
-def update_job(job:Job,id:int):
+def update_job(job:JobSchema,id:int):
     try:
         JobService.update(id,job)
         return {
@@ -404,7 +404,7 @@ def update_job(job:Job,id:int):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.delete("/jobs/{id}",response_model=JobSchema,status_code=status.HTTP_200_OK)
-def delet_job(job:Job):
+def delet_job(job:JobSchema):
     try:
         JobService.delete(id)
         return {
@@ -418,7 +418,7 @@ def delet_job(job:Job):
 @app.get("/jobs",response_model=List[JobSchema],status_code=status.HTTP_200_OK)
 def getting_jobs():
     try:
-        jobs:List[Job] = JobService.getting_all()
+        jobs:List[JobSchema] = JobService.getting_all()
         return jobs
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -428,7 +428,7 @@ def getting_jobs():
 @app.get("/jobs",response_model=JobSchema,status_code=status.HTTP_200_OK)
 def getting_job_by_id(id:int):
     try:
-        job:Job = JobService.getting_by_id(id)
+        job:JobSchema = JobService.getting_by_id(id)
         return job
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -437,7 +437,7 @@ def getting_job_by_id(id:int):
 
 
 @app.post("/candidates",response_model=CandidateSchema,status_code=status.HTTP_200_OK)
-def create_candidate(candidate:Candidate):
+def create_candidate(candidate:CandidateSchema):
     try:
           CandidateService.create_candidate(candidate)
           return {
@@ -450,7 +450,7 @@ def create_candidate(candidate:Candidate):
 
 
 @app.put("/candidates/{id}")
-def update_candidate(candidate:Candidate,id:int):
+def update_candidate(candidate:CandidateSchema,id:int):
     try:
           CandidateService.update_candidate(candidate)
           return {
@@ -477,7 +477,7 @@ def delete_candidate(id:int):
 @app.get("/candidates/",response_model=List[CandidateSchema],status_code=status.HTTP_200_OK)
 def getting_all_candidates():
     try:
-          candidates:List[Candidate] = CandidateService.getting_all()
+          candidates:List[CandidateSchema] = CandidateService.getting_all()
           return candidates
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -487,7 +487,7 @@ def getting_all_candidates():
 @app.get("/candidates/{id}")
 def getting_all_candidates(id:int):
     try:
-          candidate:Candidate = CandidateService.getting_by_id(id)
+          candidate:CandidateSchema = CandidateService.getting_by_id(id)
           return candidate
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -495,7 +495,7 @@ def getting_all_candidates(id:int):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.post("/finbancial",response_model=FinancialSchema,status_code=status.HTTP_200_OK)
-def create_financial_registration(financial:FinancialRegistration):
+def create_financial_registration(financial:FinancialSchema):
     try:
           FinancialService.create(financial)
           return {
@@ -507,7 +507,7 @@ def create_financial_registration(financial:FinancialRegistration):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.put("/finbancial/{id}",response_model=FinancialSchema,status_code=status.HTTP_200_OK)
-def create_financial_registration(financial:FinancialRegistration,id:int):
+def create_financial_registration(financial:FinancialSchema,id:int):
     try:
           FinancialService.update(financial,id)
           return {
@@ -530,10 +530,10 @@ def create_financial_registration(id:int):
     except HTTPException:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
-@app.get("/financials",response_model=List[FinancialRegistration],status_code=status.HTTP_200_OK)
+@app.get("/financials",response_model=List[FinancialSchema],status_code=status.HTTP_200_OK)
 def getting_all_financial_registration():
     try:
-        financials:List[FinancialRegistration] = FinancialService.getting_all()
+        financials:List[FinancialSchema] = FinancialService.getting_all()
         return financials   
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -543,7 +543,7 @@ def getting_all_financial_registration():
 @app.get("/financial/{id}",response_model=FinancialSchema,status_code=status.HTTP_200_OK)
 def getting_financial_by_id(id:int):
     try:
-          financial:FinancialRegistration = FinancialService.getting_by_id(id)
+          financial:FinancialSchema = FinancialService.getting_by_id(id)
           return financial
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -551,7 +551,7 @@ def getting_financial_by_id(id:int):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.post("/sales",response_model=SalesSchema,status_code=status.HTTP_200_OK )
-def create_sales(sales:Sales):
+def create_sales(sales:SalesSchema):
     try:
           SalesService.create(sales)
           return {
@@ -563,7 +563,7 @@ def create_sales(sales:Sales):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Algo deu errado, verifique se os dados estão inseridos corretamente.")
 
 @app.put("/sales/{id}", response_model=SalesSchema,status_code=status.HTTP_200_OK)
-def update_sales(sales:Sales,id:int):
+def update_sales(sales:SalesSchema,id:int):
     try:
           SalesService.update(sales)
           return {
@@ -589,7 +589,7 @@ def delete_sales(id:int):
 @app.get("/sales/{id}", response_model=SalesSchema,status_code=status.HTTP_200_OK)
 def get_sales_by_id(id:int):
     try:
-          sale:Sales = SalesService.getting_by_id(id)
+          sale:SalesSchema = SalesService.getting_by_id(id)
           return sale
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
@@ -599,7 +599,7 @@ def get_sales_by_id(id:int):
 @app.get("/sales",response_model=List[SalesSchema],status_code=status.HTTP_200_OK)
 def getting_all_sales():
     try:
-          sales:List[Sales] = SalesService.getting_all()
+          sales:List[SalesSchema] = SalesService.getting_all()
           return sales
     except HTTPException:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Não é possível adicionar um projeto.")
