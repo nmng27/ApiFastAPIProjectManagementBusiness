@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field, validator, EmailStr
-from typing import Optional
 from datetime import date
 
 class Address(BaseModel):
